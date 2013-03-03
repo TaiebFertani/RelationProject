@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
@@ -33,8 +34,17 @@ public class Affectation implements Serializable {
 	}
 
 	@ManyToOne
+	@JoinColumn(name = "idEmp", referencedColumnName = "idEmployee", insertable = false, updatable = false)
 	public Employee getEmployee() {
 		return employee;
+	}
+
+	public Affectation(String role, Employee employee, Project project) {
+		super();
+		this.role = role;
+		this.employee = employee;
+		this.project = project;
+		this.affectationPk=new AffectationPK(employee.getIdEmployee(), project.getIdProject());
 	}
 
 	public void setEmployee(Employee employee) {
@@ -42,6 +52,7 @@ public class Affectation implements Serializable {
 	}
 
 	@ManyToOne
+	@JoinColumn(name = "idProj", referencedColumnName = "idProject", insertable = false, updatable = false)
 	public Project getProject() {
 		return project;
 	}
